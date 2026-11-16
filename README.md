@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  A real-time chat app that runs entirely on Cloudflare.<br>
+  A real-time chat app that runs entirely on Cloudflare. <br>
   Rooms, threads, DMs, files, search, bots and push notifications, deployed in one click.
 </p>
 
