@@ -147,16 +147,16 @@ describe("Connection sign-in and revocation", () => {
 });
 
 describe("One live connection per tab outside the open room", () => {
-  it("opens the workspace socket on the page's own host, over wss on https pages", () => {
-    expect(workspaceSocketUrl()).toBe("ws://localhost:3000/api/socket");
+  it("opens the workspace socket on the page's own host, over wss on https pages, saying whether the tab is shown", () => {
+    expect(workspaceSocketUrl({ visible: true })).toBe("ws://localhost:3000/api/socket?visible=1");
     vi.stubGlobal("location", new URL("https://ember.example/rooms/general"));
-    expect(workspaceSocketUrl()).toBe("wss://ember.example/api/socket");
+    expect(workspaceSocketUrl({ visible: false })).toBe("wss://ember.example/api/socket?visible=0");
     vi.unstubAllGlobals();
   });
 });
 
 describe("Live sidebar updates", () => {
-  const sidebar: Sidebar = { rooms: [{ id: "r1", name: "Design", kind: "open", icon: null, unread: false, involvement: "mentions" }], favorites: { rooms: [], version: 0 }, sharedOrder: [], invitation: null, suggestions: [], huddles: {} };
+  const sidebar: Sidebar = { rooms: [{ id: "r1", name: "Design", kind: "open", icon: null, unread: false, involvement: "mentions" }], favorites: { rooms: [], version: 0 }, sharedOrder: [], invitation: null, huddles: {} };
 
   it("keeps the sidebar's ETag, and names it to keep the copy while it's current", async () => {
     const fetch = vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(Response.json(sidebar, { headers: { ETag: 'W/"abc"' } }));
