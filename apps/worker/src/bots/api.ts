@@ -12,6 +12,7 @@ import {
   type StoredFile,
   type UserId,
 } from "@ember/protocol";
+import { BLOCKED_WORDS_REFUSED } from "@ember/protocol/blocked-words";
 import { directoryOf } from "../avatar-tokens";
 import { bodyUpTo } from "../bodies";
 import { BLANK, EMPTY, FORBIDDEN, NOT_FOUND, type BotPage } from "../chat-room";
@@ -178,7 +179,7 @@ async function postSlackMessage(request: Request, env: Env, roomId: RoomId, key:
   // Again now the body has arrived, as `createMessage` checks text.
   const arrived = await slackBotIn(env, roomId, key);
   if (arrived instanceof Response) return arrived;
-  const message = slackMessage(payload, arrived.takesClicks);
+  const message = slackMessage(payload, arrived.takesClicks, true);
   if (typeof message === "string") return slackAnswer(400, message);
   const created = await env.CHAT_ROOM.getByName(roomId).createBotMessage(roomId, arrived, message.markup, message.cards);
   if (!created) return slackAnswer(404, "channel_not_found");
@@ -201,7 +202,7 @@ async function replaceWithSlackMessage(request: Request, env: Env, roomId: RoomI
   const arrived = await slackBotIn(env, roomId, key);
   if (arrived instanceof Response) return arrived;
   const room = env.CHAT_ROOM.getByName(roomId);
-  const message = payload.delete_original === true ? null : slackMessage(payload, arrived.takesClicks);
+  const message = payload.delete_original === true ? null : slackMessage(payload, arrived.takesClicks, true);
   if (typeof message === "string") return slackAnswer(400, message);
   const refused = message ? await room.editBotMessage(roomId, arrived, messageId, message.markup, message.cards) : await room.deleteBotMessage(roomId, arrived, messageId);
   if (refused === NOT_FOUND) return slackAnswer(404, "message_not_found");
@@ -392,7 +393,7 @@ async function withForm(request: Request, answer: (form: FormReader) => Promise<
  * R2 keeping it as it arrives, a part at a time, as a browser's upload is, since a form can bring more
  * than a Worker can hold. Answers the message, why the room took nothing, as `finishBotUpload` says, or
  * what the request answers otherwise: 413 for a file larger than a browser can upload, and 422 for a name
- * too long to keep. Without an R2 bucket bound as FILES, it answers 503, as a browser's upload does.
+ * too long to keep, or with a word Blocked words keeps out. Without an R2 bucket bound as FILES, it answers 503, as a browser's upload does.
  */
 async function postFile(
   env: Env,
@@ -412,6 +413,7 @@ async function postFile(
   const file = { filename, declaredType, limit: MAX_FILE_SIZE, read: () => form.read() };
   const room = env.CHAT_ROOM.getByName(roomId);
   const started = await room.startBotUpload(roomId, access, file, messageId);
+  if (started === BLOCKED_WORDS_REFUSED) return unprocessable(started);
   if (typeof started === "string") return started;
   const stored = await storeArriving(files, objectKey(started.key), file);
   if (!stored) return exception(413);
