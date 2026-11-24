@@ -266,6 +266,15 @@ export function CheckCircle(props: IconoirIconProps) {
   );
 }
 
+export function Clock(props: IconoirIconProps) {
+  return (
+    <IconoirIcon name="clock" {...props}>
+      <path d="M12 6L12 12L18 12" {...LINE} />
+      <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" {...LINE} />
+    </IconoirIcon>
+  );
+}
+
 export function ClockRotateRight(props: IconoirIconProps) {
   return (
     <IconoirIcon name="clock-rotate-right" {...props}>
@@ -1048,6 +1057,18 @@ export function ShareIos(props: IconoirIconProps) {
   );
 }
 
+export function SlashSquare(props: IconoirIconProps) {
+  return (
+    <IconoirIcon name="slash-square" {...props}>
+      <path
+        d="M21 3.6V20.4C21 20.7314 20.7314 21 20.4 21H3.6C3.26863 21 3 20.7314 3 20.4V3.6C3 3.26863 3.26863 3 3.6 3H20.4C20.7314 3 21 3.26863 21 3.6Z"
+        {...LINE}
+      />
+      <path d="M10 16L14 8" {...LINE} />
+    </IconoirIcon>
+  );
+}
+
 export function SmartphoneDevice(props: IconoirIconProps) {
   return (
     <IconoirIcon name="smartphone-device" {...props}>
@@ -1189,6 +1210,14 @@ export function Trash(props: IconoirIconProps) {
   );
 }
 
+export function TriangleFlag(props: IconoirIconProps) {
+  return (
+    <IconoirIcon name="triangle-flag" {...props}>
+      <path d="M8 21L8 16M8 16V3.57709C8 3.10699 8.5161 2.81949 8.91581 3.06693L17.7061 8.50854C18.0775 8.73848 18.0866 9.2756 17.7231 9.51793L8 16Z" {...LINE} />
+    </IconoirIcon>
+  );
+}
+
 export function Underline(props: IconoirIconProps) {
   return (
     <IconoirIcon name="underline" {...props}>
@@ -1220,6 +1249,16 @@ export function UserPlus(props: IconoirIconProps) {
   return (
     <IconoirIcon name="user-plus" {...props}>
       <path d="M17 10H20M23 10H20M20 10V7M20 10V13" {...LINE} />
+      <path d="M1 20V19C1 15.134 4.13401 12 8 12V12C11.866 12 15 15.134 15 19V20" {...LINE} />
+      <path d="M8 12C10.2091 12 12 10.2091 12 8C12 5.79086 10.2091 4 8 4C5.79086 4 4 5.79086 4 8C4 10.2091 5.79086 12 8 12Z" {...LINE} />
+    </IconoirIcon>
+  );
+}
+
+export function UserXmark(props: IconoirIconProps) {
+  return (
+    <IconoirIcon name="user-xmark" {...props}>
+      <path d="M18.6213 12.1213L20.7426 10M22.864 7.87868L20.7426 10M20.7426 10L18.6213 7.87868M20.7426 10L22.864 12.1213" {...LINE} />
       <path d="M1 20V19C1 15.134 4.13401 12 8 12V12C11.866 12 15 15.134 15 19V20" {...LINE} />
       <path d="M8 12C10.2091 12 12 10.2091 12 8C12 5.79086 10.2091 4 8 4C5.79086 4 4 5.79086 4 8C4 10.2091 5.79086 12 8 12Z" {...LINE} />
     </IconoirIcon>
@@ -1258,6 +1297,19 @@ export function WarningTriangle(props: IconoirIconProps) {
       />
       <path d="M12 9V13" {...ROUND_ENDS} />
       <path d="M12 17.01L12.01 16.9989" {...LINE} />
+    </IconoirIcon>
+  );
+}
+
+export function WifiWarning(props: IconoirIconProps) {
+  return (
+    <IconoirIcon name="wifi-warning" {...props}>
+      <path
+        d="M2.12636 8.32361C1.92567 8.06248 1.97135 7.71868 2.21158 7.53482C5.2903 5.17827 8.55286 4 11.9993 4C15.4457 4 18.7082 5.17827 21.7869 7.53482C22.0388 7.74708 22.0676 8.09272 21.8722 8.32367L12.4174 19.4967C12.3978 19.5199 12.3763 19.5414 12.3531 19.561C12.1222 19.7564 11.7765 19.7276 11.5811 19.4967L2.12636 8.32361Z"
+        {...OUTLINE}
+      />
+      <path d="M12 8V10" {...LINE} />
+      <path d="M12 14.01L12.01 13.9989" {...LINE} />
     </IconoirIcon>
   );
 }
